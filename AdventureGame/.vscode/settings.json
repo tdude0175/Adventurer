@@ -1,0 +1,13 @@
+{
+    "sqltools.connections": [
+        {
+            "database": "Adventurer",
+            "dialect": "MySQL",
+            "name": "connectionToAdventureGameDatabase",
+            "password": "Stormlordsrage08!",
+            "port": 3306,
+            "server": "localhost",
+            "username": "thomas"
+        }
+    ]
+}
