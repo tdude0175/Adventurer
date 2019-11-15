@@ -2,30 +2,13 @@
 using MySql.Data.MySqlClient;
 using MySql.Data;
 namespace AdventureGame
-{
-    class Character
+{    class Monster
     {
-        string userName;
-        int attack = 30;
-        int defense = 10;
-        int health = 100;
-        object Armor;
-        object Weapon;
-        object SkillOne;
-        object SkillTwo;
-        object SkillThree;
-        int EXP = 0;
-        int Level = 1;
-        Character(string name)
-        {
-            this.userName = name;
-
-        }
-    }
-
-    class Monster
-    {
-
+        public string userName;
+        public int attack = 30;
+        public int defense = 10;
+        public int health = 100;
+        public int EXP = 0;
     }
 
 
@@ -49,9 +32,12 @@ namespace AdventureGame
             */
 
             Console.WriteLine("Welcome To Adventurer");
-            Console.WriteLine("Please Enter your username or Id");
+            Console.WriteLine("Please Enter your username");
             var userId = Console.ReadLine();
-            Console.WriteLine(userId);
+            Console.WriteLine("Here are your stats");
+            var player = new Character(userId);
+            player.PrintStats();
+            
         }
     }
 }

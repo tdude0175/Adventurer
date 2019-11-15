@@ -5631,11 +5631,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/student/PersonalProjects/dotnetPractice/AdventureGame/AdventureGame.csproj",
+      "projectUniqueName": "/home/student/PersonalProjects/dotnetPractice/Adventurer/AdventureGame/AdventureGame.csproj",
       "projectName": "AdventureGame",
-      "projectPath": "/home/student/PersonalProjects/dotnetPractice/AdventureGame/AdventureGame.csproj",
+      "projectPath": "/home/student/PersonalProjects/dotnetPractice/Adventurer/AdventureGame/AdventureGame.csproj",
       "packagesPath": "/home/student/.nuget/packages/",
-      "outputPath": "/home/student/PersonalProjects/dotnetPractice/AdventureGame/obj/",
+      "outputPath": "/home/student/PersonalProjects/dotnetPractice/Adventurer/AdventureGame/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/student/.nuget/NuGet/NuGet.Config"
