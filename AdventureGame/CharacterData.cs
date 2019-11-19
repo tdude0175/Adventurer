@@ -6,9 +6,9 @@ namespace AdventureGame
     public class Character
     {
         public string userName;
-        public int attack = setStats(20,40);
-        public int defense = setStats(5,15);
-        public int health = setStats(50,200);
+        public int attack = setStats(5,15);
+        public int defense = setStats(0,5);
+        public int health = setStats(50,100);
         public object Armor;
         public object Weapon;
         public object SkillOne;
@@ -33,6 +33,7 @@ namespace AdventureGame
             Console.WriteLine($"Level:{this.Level} Exp:{this.EXP}");
             Console.WriteLine($"Attack:{this.attack} Defense:{this.defense} Health:{this.health}");
             Console.WriteLine($"Skill One:{this.SkillOne} Skill Two:{this.SkillTwo} Skill Three:{this.SkillThree}");
+            Console.WriteLine("");
         }
     }
 }

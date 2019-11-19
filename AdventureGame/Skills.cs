@@ -6,11 +6,24 @@ namespace AdventureGame
     public class Skill{
         public static int Attack(int attackStat , int defenseStat)
         {
+            if(attackStat - defenseStat > 0)
             return(attackStat - defenseStat);
+            else
+            {
+                return(0);
+            }
         }
         public static int Defend(int defenseStat , int attackStat)
         {
-            return((defenseStat+ defenseStat/2) - attackStat);
+            if(attackStat - (defenseStat+ defenseStat/2) > 0)
+            {
+                return(attackStat - (defenseStat+ defenseStat/2));
+            }
+            else
+            {
+                return(0);
+            }
+            
         }
 
         public static bool Run()

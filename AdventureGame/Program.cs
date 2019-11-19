@@ -22,8 +22,9 @@ namespace AdventureGame
         public void MonsterStats()
         {
             Console.WriteLine(this.monsterName);
-            Console.WriteLine(this.health);
+            Console.WriteLine($"Monster Health:{this.health}");
             Console.WriteLine($"Attack:{this.attack} Defense:{this.defense}");
+            Console.WriteLine("");
 
         }
     }
@@ -35,7 +36,7 @@ namespace AdventureGame
         static void Main(string[] args)
         {
 
-            var monsterOne = new Monster("bat",2,5,10,40);
+            var monsterOne = new Monster("bat",2,5,3,40);
             /*
             This Code is for connecting to the database where we are going to save the data for the game info. 
             REMEMBER TO PUT PASSWORD IN BEFORE YOU USE THIS. 
@@ -54,12 +55,78 @@ namespace AdventureGame
             Console.WriteLine("Welcome To Adventurer");
             Console.WriteLine("Please Enter your username");
             var userId = Console.ReadLine();
-            Console.WriteLine("Pick your Skills");
-            Console.ReadLine();
+            // ToDo Make switch case for skills to show off and use, Can you use an array/List?
+            // Console.WriteLine("Pick your Skills");
+            // Console.ReadLine();
             Console.WriteLine("Here are your stats");
             var player = new Character(userId);
             player.PrintStats();
-            monsterOne.MonsterStats();
+            
+
+
+            // Fighting a monster function to run while fighting a monster
+            Console.WriteLine($"you Encounter a {monsterOne.monsterName}!");
+            Battling = true;
+            while(Battling)
+            {
+                var defending = false;
+                player.PrintStats();
+                monsterOne.MonsterStats();
+                Console.WriteLine("what do you do?");
+                Console.WriteLine("1:Attack 2:Defend 3: Run");
+                var action = Console.ReadLine();
+                if(action == "1")
+                {
+                    Console.WriteLine("attacking");
+                    int damage = Skill.Attack(player.attack,monsterOne.defense);
+                    Console.WriteLine(damage);
+                    monsterOne.health = monsterOne.health - damage;
+                }
+                else if(action == "2")
+                {
+                    defending = true;
+                }
+                else if (action == "3")
+                {
+                    Console.WriteLine("Running");
+                    bool madeit = Skill.Run();
+                    if(madeit == true)
+                    {
+                        Console.WriteLine("You got away!");
+                        Battling = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine("They Caught up!");
+                    }
+                }
+                 if(monsterOne.health <= 0)
+                {
+                    Console.WriteLine("You Won!");
+                    player.EXP = player.EXP + monsterOne.EXP;
+                    Console.WriteLine($" Exp points:{player.EXP}");
+                    Battling = false;
+                }
+                if(defending)
+                {
+                    Console.WriteLine("defending");
+                    int monsterDamage = Skill.Defend(player.defense, monsterOne.attack);
+                    player.health = player.health - monsterDamage;
+                }else
+                {
+                    int monsterDamage = Skill.Attack(monsterOne.attack,player.defense);
+                    player.health = player.health - monsterDamage;
+                }
+               
+                if(player.health <= 0)
+                {
+                    Console.WriteLine("game over!");
+                    Battling = false;
+                }
+            }
+
+            
+            
 
 
 
