@@ -6,7 +6,7 @@ namespace AdventureGame
     public class Character
     {
         public string userName;
-        public int attack = setStats(5,15);
+        public int attack = setStats(10,20);
         public int defense = setStats(0,5);
         public int health = setStats(50,100);
         public object Armor;

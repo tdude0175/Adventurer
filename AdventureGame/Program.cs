@@ -36,7 +36,7 @@ namespace AdventureGame
         static void Main(string[] args)
         {
 
-            var monsterOne = new Monster("bat",2,5,3,40);
+           
             /*
             This Code is for connecting to the database where we are going to save the data for the game info. 
             REMEMBER TO PUT PASSWORD IN BEFORE YOU USE THIS. 
@@ -61,10 +61,16 @@ namespace AdventureGame
             Console.WriteLine("Here are your stats");
             var player = new Character(userId);
             player.PrintStats();
-            
+            Console.ReadLine();
+            Console.Clear();
 
-
-            // Fighting a monster function to run while fighting a monster
+            for(int i = 0; i < 10; i++)
+            {
+                var randMon = new Random();
+                int whichMon = randMon.Next(3);
+                Console.WriteLine(whichMon);
+                 var monsterOne = new Monster("bat",2,5,3,40);
+                // Fighting a monster function to run while fighting a monster
             Console.WriteLine($"you Encounter a {monsterOne.monsterName}!");
             Battling = true;
             while(Battling)
@@ -77,9 +83,9 @@ namespace AdventureGame
                 var action = Console.ReadLine();
                 if(action == "1")
                 {
-                    Console.WriteLine("attacking");
+                    // Console.WriteLine("attacking");
                     int damage = Skill.Attack(player.attack,monsterOne.defense);
-                    Console.WriteLine(damage);
+                    Console.WriteLine($" You Dealt {damage} Damage!");
                     monsterOne.health = monsterOne.health - damage;
                 }
                 else if(action == "2")
@@ -94,6 +100,8 @@ namespace AdventureGame
                     {
                         Console.WriteLine("You got away!");
                         Battling = false;
+                        Console.ReadLine();
+                        Console.Clear();
                     }
                     else
                     {
@@ -105,32 +113,41 @@ namespace AdventureGame
                     Console.WriteLine("You Won!");
                     player.EXP = player.EXP + monsterOne.EXP;
                     Console.WriteLine($" Exp points:{player.EXP}");
+                    Console.ReadLine();
+                    Console.Clear();
                     Battling = false;
                 }
+                else{
                 if(defending)
                 {
-                    Console.WriteLine("defending");
+                    // Console.WriteLine("defending");
                     int monsterDamage = Skill.Defend(player.defense, monsterOne.attack);
+                    Console.WriteLine($" you took {monsterDamage} points of damage!");
                     player.health = player.health - monsterDamage;
+                    Console.ReadLine();
+                    Console.Clear();
                 }else
                 {
                     int monsterDamage = Skill.Attack(monsterOne.attack,player.defense);
+                    Console.WriteLine($" you took {monsterDamage} points of damage!");
                     player.health = player.health - monsterDamage;
+                    Console.ReadLine();
+                    Console.Clear();
                 }
-               
                 if(player.health <= 0)
                 {
                     Console.WriteLine("game over!");
                     Battling = false;
+                    Console.ReadLine();
+                }
                 }
             }
 
-            
-            
-
-
-
-            
+            if(player.health <= 0)
+            {
+                break;
+            }
+            }   
         }
     }
 }
