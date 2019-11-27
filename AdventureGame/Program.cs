@@ -8,6 +8,8 @@ namespace AdventureGame
         public int attack = 30;
         public int defense = 10;
         public int health = 100;
+
+        public int currentHealth;
         public int EXP = 0;
 
         public Monster(string Name, int EXP, int att, int def , int hp)
@@ -17,12 +19,13 @@ namespace AdventureGame
             this.defense = def;
             this.EXP = EXP;
             this.health = hp;
+            this.currentHealth = hp;
         }
 
         public void MonsterStats()
         {
             Console.WriteLine(this.monsterName);
-            Console.WriteLine($"Monster Health:{this.health}");
+            Console.WriteLine($"Monster Health:{this.currentHealth}");
             Console.WriteLine($"Attack:{this.attack} Defense:{this.defense}");
             Console.WriteLine("");
 
@@ -33,6 +36,7 @@ namespace AdventureGame
     class Program
     {
         public static bool Battling = false;
+        static Monster monsterOne;
         static void Main(string[] args)
         {
 
@@ -67,86 +71,102 @@ namespace AdventureGame
             for(int i = 0; i < 10; i++)
             {
                 var randMon = new Random();
+                // Determine a random monster fight
                 int whichMon = randMon.Next(3);
-                Console.WriteLine(whichMon);
-                 var monsterOne = new Monster("bat",2,5,3,40);
+               
+                if(whichMon == 0){
+                  monsterOne = new Monster("Bat",2,5,3,40);
+                }
+                else if(whichMon == 1)
+                {
+                    monsterOne = new Monster("Goat",3,10,0,30);
+                }
+                else if(whichMon == 2)
+                {
+                    monsterOne = new Monster("Rat",1,1,2,5);
+                }
                 // Fighting a monster function to run while fighting a monster
             Console.WriteLine($"you Encounter a {monsterOne.monsterName}!");
             Battling = true;
-            while(Battling)
-            {
-                var defending = false;
-                player.PrintStats();
-                monsterOne.MonsterStats();
-                Console.WriteLine("what do you do?");
-                Console.WriteLine("1:Attack 2:Defend 3: Run");
-                var action = Console.ReadLine();
-                if(action == "1")
+                while(Battling)
                 {
-                    // Console.WriteLine("attacking");
-                    int damage = Skill.Attack(player.attack,monsterOne.defense);
-                    Console.WriteLine($" You Dealt {damage} Damage!");
-                    monsterOne.health = monsterOne.health - damage;
-                }
-                else if(action == "2")
-                {
-                    defending = true;
-                }
-                else if (action == "3")
-                {
-                    Console.WriteLine("Running");
-                    bool madeit = Skill.Run();
-                    if(madeit == true)
+                    var defending = false;
+                    player.PrintStats();
+                    monsterOne.MonsterStats();
+                    Console.WriteLine("what do you do?");
+                    Console.WriteLine("1:Attack 2:Defend 3: Run");
+                    var action = Console.ReadLine();
+                    if(action == "1")
                     {
-                        Console.WriteLine("You got away!");
+                        // Console.WriteLine("attacking");
+                        int damage = Skill.Attack(player.attack,monsterOne.defense);
+                        Console.WriteLine($" You Dealt {damage} Damage!");
+                        monsterOne.currentHealth = monsterOne.currentHealth - damage;
+                    }
+                    else if(action == "2")
+                    {
+                        defending = true;
+                    }
+                    else if (action == "3")
+                    {
+                        Console.WriteLine("Running");
+                        bool madeit = Skill.Run();
+                        if(madeit == true)
+                        {
+                            Console.WriteLine("You got away!");
+                            Battling = false;
+                            Console.ReadLine();
+                            Console.Clear();
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("They Caught up!");
+                        }
+                    }
+                    if(monsterOne.currentHealth <= 0)
+                    {
+                        Console.WriteLine("You Won!");
+                        player.EXP = player.EXP + monsterOne.EXP;
+                        Console.WriteLine($" Exp points:{player.EXP}");
+                        Console.ReadLine();
+                        Console.Clear();
                         Battling = false;
+                    }
+                    else{
+                    if(defending)
+                    {
+                        // Console.WriteLine("defending");
+                        int monsterDamage = Skill.Defend(player.defense, monsterOne.attack);
+                        Console.WriteLine($" you took {monsterDamage} points of damage!");
+                        player.currentHealth = player.currentHealth - monsterDamage;
+                        Console.ReadLine();
+                        Console.Clear();
+                    }else
+                    {
+                        int monsterDamage = Skill.Attack(monsterOne.attack,player.defense);
+                        Console.WriteLine($" you took {monsterDamage} points of damage!");
+                        player.currentHealth = player.currentHealth - monsterDamage;
                         Console.ReadLine();
                         Console.Clear();
                     }
-                    else
+                    if(player.currentHealth <= 0)
                     {
-                        Console.WriteLine("They Caught up!");
+                        Console.WriteLine("game over!");
+                        Battling = false;
+                        Console.ReadLine();
+                    }
                     }
                 }
-                 if(monsterOne.health <= 0)
-                {
-                    Console.WriteLine("You Won!");
-                    player.EXP = player.EXP + monsterOne.EXP;
-                    Console.WriteLine($" Exp points:{player.EXP}");
-                    Console.ReadLine();
-                    Console.Clear();
-                    Battling = false;
-                }
-                else{
-                if(defending)
-                {
-                    // Console.WriteLine("defending");
-                    int monsterDamage = Skill.Defend(player.defense, monsterOne.attack);
-                    Console.WriteLine($" you took {monsterDamage} points of damage!");
-                    player.health = player.health - monsterDamage;
-                    Console.ReadLine();
-                    Console.Clear();
-                }else
-                {
-                    int monsterDamage = Skill.Attack(monsterOne.attack,player.defense);
-                    Console.WriteLine($" you took {monsterDamage} points of damage!");
-                    player.health = player.health - monsterDamage;
-                    Console.ReadLine();
-                    Console.Clear();
-                }
-                if(player.health <= 0)
-                {
-                    Console.WriteLine("game over!");
-                    Battling = false;
-                    Console.ReadLine();
-                }
-                }
-            }
 
-            if(player.health <= 0)
-            {
-                break;
-            }
+                if(player.currentHealth <= 0)
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("You defeated all the monsters!");
+                }
             }   
         }
     }
